@@ -1,6 +1,11 @@
 
 type IfEquals<X, Y, A=X, B=never> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? A : B;
 
+type GetReadonlyKeys<T> = {
+  [K in keyof T]-?: IfEquals<Pick<T, K>, Readonly<Pick<T, K>>, K, never>
+}[keyof T]
+
+
 type EQ1 = IfEquals<
   { a: number } ,
   { a: number },
